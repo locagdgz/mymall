@@ -1,5 +1,5 @@
 <template>
-  <swiper interval="3000">
+  <swiper :interval="1000">
     <swiper-item v-for="item in banner">
       <a :href="item.link">
         <img :src="item.image" alt="">
