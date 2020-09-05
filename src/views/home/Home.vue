@@ -120,7 +120,7 @@
     import RecommendView from "./childComps/RecommendView";
     import FeatureView from "./childComps/FeatureView";
 
-    import {getHomeMultiData} from "network/home";
+    import {getHomeMultiData, getHomeGoods} from "network/home";
 
     export default {
         name: "Home",
@@ -136,10 +136,21 @@
             banner: [],
             dKeyword: [],
             keywords: [],
-            recommend:[]
+            recommend:[],
+            goods:{
+              'pop':{page:0,list:[]},
+              'new':{page:0,list:[]},
+              'sell':{page:0,list:[]}
+            }
           }
         },
         created() {
+          this.getHomeGoods('pop')
+          this.getHomeGoods('new')
+          this.getHomeGoods('sell')
+        },
+      methods: {
+        getHomeMultiData(){
           // 请求多个数据
           getHomeMultiData().then(data => {
             this.banner = data.banner.list
@@ -147,7 +158,15 @@
             this.keywords = data.keywords.list
             this.recommend = data.recommend.list
           })
+        },
+        getHomeGoods(type){
+          let thisGoods = this.goods[type]
+          // 请求商品数据
+          getHomeGoods(type,++thisGoods.page).then(data => {
+            thisGoods.list.push(...data.list)
+          })
         }
+      }
     }
 </script>
 
