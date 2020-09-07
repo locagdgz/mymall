@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item">
 <!--    <a :href="goodsItem.link">-->
-      <img :src="goodsItem.show.img" alt="">
+      <img :src="goodsItem.show.img" alt="" @load="imageLoaded">
       <div class="goods-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">¥{{goodsItem.price}}</span>
@@ -21,6 +21,11 @@
               return []
             }
           }
+        },
+        methods:{
+          imageLoaded(){
+            this.$bus.$emit('imageLoadedRefresh')
+          }
         }
 
     }
@@ -33,7 +38,7 @@
     text-align: center;
     font-size: var(--font-size);
     position: relative;
-    padding: 0 2px 40px 2px;
+    padding: 0 3px 40px 3px;
 
   }
   .goods-info {
